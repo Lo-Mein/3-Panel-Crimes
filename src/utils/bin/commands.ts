@@ -1,7 +1,14 @@
 /* eslint-disable prettier/prettier */
 // List of commands that do not require API calls
+import { useState } from 'react';
 import * as bin from './index';
 import config from '../../../config.json';
+import { ethers } from 'ethers';
+
+//set state for acctounts
+export const useAccounts = () => {
+  const [currentAccount, setCurrentAccount] = useState<string | null>(null);
+};
 
 // Help
 export const help = async (args: string[]): Promise<string> => {
@@ -20,6 +27,23 @@ export const help = async (args: string[]): Promise<string> => {
 [ctrl+l]/clear: clear terminal.\n
 Type 'sumfetch' to display summary.
 `;
+};
+
+// Connect metamask wallet and get accounts
+export const connect = async (args: string[]): Promise<string> => {
+  const { ethereum } = window;
+  if (ethereum) {
+    try {
+      const accounts = await ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+
+      return `Connected to metamask.\nAccounts: ${accounts[0]}`;
+    } catch (error) {
+      return `Error: ${error}`;
+    }
+  }
+  return `Error: No metamask detected.`;
 };
 
 // Redirection

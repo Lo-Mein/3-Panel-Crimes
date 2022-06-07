@@ -1,46 +1,149 @@
+/* eslint-disable no-console */
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import contract from '../contracts/NFTCollectible.json';
+import { ethers } from 'ethers';
+
+const contractAddress = '0xDF27FbDcfC0644d425e1C68539118C8f3A6BbddE';
+const abi = contract.abi;
+const desiredNFTCollections = ['0x159640309cf1e732cff90a3a7c23d3825cd50f5a'];
 
 const MintPage = ({ pageProps }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const [currentAccount, setCurrentAccount] = useState(null);
+  const [errorState, setErrorState] = useState(false);
+  const [successState, setSuccessState] = useState(false);
+  const [imageURLs, setImageURLs] = useState([]);
 
-  const onClickAnywhere = () => {
-    inputRef.current.focus();
+  const MintNFTHandler = async () => {
+    const { ethereum } = window;
+
+    if (currentAccount == null) {
+      // set error state
+      console.log('Error with connected account.');
+      return;
+    }
+
+    if (!ethereum) {
+      alert('Please install metamask');
+      return;
+    }
+
+    try {
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      const nftContract = new ethers.Contract(contractAddress, abi, signer);
+
+      console.log('Initialize Payment');
+      let nftTxn = await nftContract.mintNFTs(1, {
+        value: ethers.utils.parseEther('0.01'),
+      });
+      console.log('Mining... please wait');
+      await nftTxn.wait();
+
+      // change from rinkeby
+
+      console.log(
+        `Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`,
+      );
+      console.log('Mint Success');
+      setSuccessState(true);
+    } catch (err) {
+      console.log('ERROR MINTING', err);
+      setErrorState(true);
+      return;
+    }
   };
+
+  const mintNftButton = () => {
+    return (
+      <button
+        onClick={MintNFTHandler}
+        className="mint-nft-button text-center bg-green border-green-200"
+      >
+        CLAIM
+      </button>
+    );
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      const { ethereum } = window;
+      let address = '';
+      try {
+        const accounts = await ethereum.request({
+          method: 'eth_requestAccounts',
+        });
+        setCurrentAccount(accounts[0]);
+        address = accounts[0];
+        console.log('Obtained Account Address');
+      } catch (err) {
+        console.log(' Error', err);
+      }
+
+      try {
+        const options = {
+          method: 'GET',
+          headers: { Accept: 'application/json' },
+        };
+
+        const ownerAddress = '0x8D77A8cf55f99d62D6B8AbC9050faf5859c0108f';
+
+        let response = await fetch(
+          'https://api.opensea.io/api/v1/assets?owner=' +
+            ownerAddress +
+            '&order_direction=desc&limit=20&include_orders=false',
+          options,
+        )
+          .then((response) => response.json())
+          .catch((err) =>
+            // ERROR
+            console.error('Error Obtaining Image URLs', err),
+          );
+
+        response.assets.forEach((element) => {
+          if (
+            desiredNFTCollections.includes(
+              String(element.asset_contract.address).toLowerCase(),
+            )
+          ) {
+            console.log('Found Asset', element.asset_contract);
+            // replace with hashes for uniqueness
+            const stateDict = { key: element.token_id, url: element.image_url };
+
+            setImageURLs((imageURLs) => [...imageURLs, stateDict]);
+          }
+        });
+
+        console.log('Obtained image URLs');
+      } catch (err) {
+        console.error('Error Obtaining Image URLs', err);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <>
-      <div
-        className="text-light-foreground dark:text-dark-foreground min-w-max text-xs md:min-w-full md:text-base content-start"
-        onClick={onClickAnywhere}
-      >
-        {/* <main className="bg-light-background dark:bg-dark-background w-full h-full p-2">
-          <Component {...pageProps} inputRef={inputRef} />
-        </main> */}
+      <div className="text-light-foreground dark:text-dark-foreground min-w-max text-md md:min-w-full md:text-base content-start">
+        <div className="grid place-items-center h-96 w-full space-y-6">
+          <h1 className="mb-2 text-2xl font-bold">
+            Fear Not Weary Collector, Mint is Here!
+          </h1>
 
-        <h1 className="mb-2 text-2xl font-bold">
-          Fear Not Weary Collector, Mint is Here!
-        </h1>
-        <div className="grid place-items-center h-96 w-full content-center">
-          Centered using Tailwind Grid
-          {/* <div className='cont flex w-full h-96 space-x-36'> */}
-          <div className="picture1 w-48 h-48 flex justify-center text-center items-center bg-white rounded-lg border border-yellow-200 shadow-md dark:bg-gray-800 dark:border-gray-700"></div>
-          <div className="picture2 w-48 h-48 flex justify-center text-center items-center bg-white rounded-lg border border-yellow-200 shadow-md dark:bg-gray-800 dark:border-gray-700"></div>
-          <div className="picture3 w-48 h-48 flex justify-center text-center items-center bg-white rounded-lg border border-yellow-200 shadow-md dark:bg-gray-800 dark:border-gray-700"></div>
-          {/* </div> */}
+          {imageURLs ? (
+            imageURLs.map((element) => (
+              <img
+                key={element.key}
+                className="picture1 w-48 h-48 flex justify-center text-center items-center bg-white rounded-lg border border-yellow-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
+                src={element.url}
+              ></img>
+            ))
+          ) : (
+            <p>ERROR</p>
+          )}
+          <div>{mintNftButton()}</div>
         </div>
-
-        {/* 
-        <div className="p-6 w-full h-96 flex justify-center text-center items-center bg-white rounded-lg border border-yellow-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-    
-            <h5 className="mb-2 text-2xl font-bold ">Congratulations Collector!</h5>
-    
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-            <a href="#" className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                Read more
-                <svg className="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-            </a>
-        </div> */}
       </div>
     </>
   );

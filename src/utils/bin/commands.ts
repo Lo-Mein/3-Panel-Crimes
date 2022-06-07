@@ -9,6 +9,8 @@ import { ethers } from 'ethers';
 
 const desiredNFTCollections = ['0x159640309cf1e732cff90a3a7c23d3825cd50f5a'];
 
+let ownerWallet = '';
+
 //set state for acctounts
 export const useAccounts = () => {
   const [currentAccount, setCurrentAccount] = useState<string | null>(null);
@@ -41,8 +43,10 @@ export const connect = async (args: string[]): Promise<string> => {
       const accounts = await ethereum.request({
         method: 'eth_requestAccounts',
       });
+      ownerWallet = accounts[0];
 
-      return `Connected to metamask.\nAccounts: ${accounts[0]}`;
+      // return `Connected to metamask.\nAccounts: ${accounts[0]}`;
+      return `Connected to metamask.\nAccounts: ${ownerWallet}`;
     } catch (error) {
       return `Error: ${error}`;
     }
@@ -53,14 +57,13 @@ export const connect = async (args: string[]): Promise<string> => {
 // Connect metamask wallet and get accounts
 export const mint = async (args: string[]): Promise<string> => {
   const { ethereum } = window;
-  if (ethereum) {
-    try {
-      const accounts = await ethereum.request({
-        method: 'eth_requestAccounts',
-      });
 
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
+  if (ethereum) {
+    let error = false;
+    try {
+      if (ownerWallet === '') {
+        return 'Error: Wallet Not Connected. Please run the connect command.';
+      }
 
       const options = {
         method: 'GET',
@@ -68,7 +71,7 @@ export const mint = async (args: string[]): Promise<string> => {
       };
 
       const ownerAddress = '0x8D77A8cf55f99d62D6B8AbC9050faf5859c0108f';
-
+      // change ownerAddress
       let response = await fetch(
         'https://api.opensea.io/api/v1/assets?owner=' +
           ownerAddress +
@@ -76,10 +79,15 @@ export const mint = async (args: string[]): Promise<string> => {
         options,
       )
         .then((response) => response.json())
-        .catch((err) =>
-          // ERROR
-          console.error('ERROR', err),
+        .catch(
+          (err) =>
+            // ERROR
+            (error = true),
         );
+
+      if (error) {
+        return 'Error Checking Wallet';
+      }
 
       response.assets.forEach((element) => {
         if (
@@ -87,24 +95,23 @@ export const mint = async (args: string[]): Promise<string> => {
             String(element.asset_contract.address).toLowerCase(),
           )
         ) {
+          console.log(element.asset_contract);
           //handleHash(element.asset_contract.address);
-          console.log('success!');
+
           // REDIRECT
-          //window.location = "/success"
-          //navigate("/success");
+
           const { pathname } = Router;
           if (pathname == '/') {
             Router.push('/mintPage');
           }
         }
       });
-
-      return `Connected to mint.\nAccounts: ${accounts[0]}`;
     } catch (error) {
       return `Error: ${error}`;
     }
+  } else {
+    return `Error No metamask detected.`;
   }
-  return `Error: No metamask detected.`;
 };
 
 // Redirection

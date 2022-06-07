@@ -12,7 +12,9 @@ module.exports = {
       current: 'currentColor',
       ...colors,
     },
-    extend: {},
+    extend: {
+      'error-bg': "url('public/decentralized.jpg')"
+    },
   },
   variants: {
     extend: {},

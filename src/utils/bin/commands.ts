@@ -1,14 +1,13 @@
+/* eslint-disable no-console */
 /* eslint-disable prettier/prettier */
 // List of commands that do not require API calls
 import { useState } from 'react';
 import * as bin from './index';
 import config from '../../../config.json';
-import Router from 'next/router'
+import Router from 'next/router';
 import { ethers } from 'ethers';
 
-const desiredNFTCollections = [
-  "0x159640309cf1e732cff90a3a7c23d3825cd50f5a",
-];
+const desiredNFTCollections = ['0x159640309cf1e732cff90a3a7c23d3825cd50f5a'];
 
 //set state for acctounts
 export const useAccounts = () => {
@@ -51,64 +50,62 @@ export const connect = async (args: string[]): Promise<string> => {
   return `Error: No metamask detected.`;
 };
 
-  // Connect metamask wallet and get accounts
-  export const mint = async (args: string[]): Promise<string> => {
-    const { ethereum } = window;
-    if (ethereum) {
-      try {
-        const accounts = await ethereum.request({
-          method: 'eth_requestAccounts',
-        });
-  
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-  
-        const options = {
-          method: "GET",
-          headers: { Accept: "application/json" },
-        };
-  
-        const ownerAddress = "0x8D77A8cf55f99d62D6B8AbC9050faf5859c0108f";
-  
-          let response = await fetch(
-            "https://api.opensea.io/api/v1/assets?owner=" +
-              ownerAddress +
-              "&order_direction=desc&limit=20&include_orders=false",
-            options
+// Connect metamask wallet and get accounts
+export const mint = async (args: string[]): Promise<string> => {
+  const { ethereum } = window;
+  if (ethereum) {
+    try {
+      const accounts = await ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+
+      const options = {
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+      };
+
+      const ownerAddress = '0x8D77A8cf55f99d62D6B8AbC9050faf5859c0108f';
+
+      let response = await fetch(
+        'https://api.opensea.io/api/v1/assets?owner=' +
+          ownerAddress +
+          '&order_direction=desc&limit=20&include_orders=false',
+        options,
+      )
+        .then((response) => response.json())
+        .catch((err) =>
+          // ERROR
+          console.error('ERROR', err),
+        );
+
+      response.assets.forEach((element) => {
+        if (
+          desiredNFTCollections.includes(
+            String(element.asset_contract.address).toLowerCase(),
           )
-            .then((response) => response.json())
-            .catch((err) =>
-              // ERROR
-              console.error("ERROR", err)
-            );
-  
-            response.assets.forEach((element) => {
-              if (
-                desiredNFTCollections.includes(
-                  String(element.asset_contract.address).toLowerCase()
-                )
-              ) {
-                //handleHash(element.asset_contract.address);
-                console.log("success!");
-                // REDIRECT
-                //window.location = "/success"
-                //navigate("/success");
-                const {pathname} = Router
-                if(pathname == '/' ){
-                   Router.push('/mintPage')
-                }
-              }
-            });
-  
-  
-  
-        return `Connected to mint.\nAccounts: ${accounts[0]}`;
-      } catch (error) {
-        return `Error: ${error}`;
-      }
+        ) {
+          //handleHash(element.asset_contract.address);
+          console.log('success!');
+          // REDIRECT
+          //window.location = "/success"
+          //navigate("/success");
+          const { pathname } = Router;
+          if (pathname == '/') {
+            Router.push('/mintPage');
+          }
+        }
+      });
+
+      return `Connected to mint.\nAccounts: ${accounts[0]}`;
+    } catch (error) {
+      return `Error: ${error}`;
     }
-    return `Error: No metamask detected.`;
-  };
+  }
+  return `Error: No metamask detected.`;
+};
 
 // Redirection
 export const repo = async (args: string[]): Promise<string> => {

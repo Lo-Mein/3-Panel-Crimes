@@ -1,7 +1,7 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 
-
-const MintPage = ({pageProps }) => {
+const MintPage = ({ pageProps }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const onClickAnywhere = () => {
@@ -10,7 +10,7 @@ const MintPage = ({pageProps }) => {
 
   return (
     <>
-    <div
+      <div
         className="text-light-foreground dark:text-dark-foreground min-w-max text-xs md:min-w-full md:text-base content-start"
         onClick={onClickAnywhere}
       >
@@ -18,18 +18,19 @@ const MintPage = ({pageProps }) => {
           <Component {...pageProps} inputRef={inputRef} />
         </main> */}
 
-        <h1 className='mb-2 text-2xl font-bold'>Fear Not Weary Collector, Mint is Here!</h1>
+        <h1 className="mb-2 text-2xl font-bold">
+          Fear Not Weary Collector, Mint is Here!
+        </h1>
         <div className="grid place-items-center h-96 w-full content-center">
-            
-        Centered using Tailwind Grid
-            {/* <div className='cont flex w-full h-96 space-x-36'> */}
-                <div className='picture1 w-48 h-48 flex justify-center text-center items-center bg-white rounded-lg border border-yellow-200 shadow-md dark:bg-gray-800 dark:border-gray-700'></div>
-                <div className='picture2 w-48 h-48 flex justify-center text-center items-center bg-white rounded-lg border border-yellow-200 shadow-md dark:bg-gray-800 dark:border-gray-700'></div>
-                <div className='picture3 w-48 h-48 flex justify-center text-center items-center bg-white rounded-lg border border-yellow-200 shadow-md dark:bg-gray-800 dark:border-gray-700'></div>
-            {/* </div> */}
+          Centered using Tailwind Grid
+          {/* <div className='cont flex w-full h-96 space-x-36'> */}
+          <div className="picture1 w-48 h-48 flex justify-center text-center items-center bg-white rounded-lg border border-yellow-200 shadow-md dark:bg-gray-800 dark:border-gray-700"></div>
+          <div className="picture2 w-48 h-48 flex justify-center text-center items-center bg-white rounded-lg border border-yellow-200 shadow-md dark:bg-gray-800 dark:border-gray-700"></div>
+          <div className="picture3 w-48 h-48 flex justify-center text-center items-center bg-white rounded-lg border border-yellow-200 shadow-md dark:bg-gray-800 dark:border-gray-700"></div>
+          {/* </div> */}
         </div>
 
-{/* 
+        {/* 
         <div className="p-6 w-full h-96 flex justify-center text-center items-center bg-white rounded-lg border border-yellow-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
     
             <h5 className="mb-2 text-2xl font-bold ">Congratulations Collector!</h5>
@@ -40,7 +41,7 @@ const MintPage = ({pageProps }) => {
                 <svg className="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </a>
         </div> */}
-    </div>
+      </div>
     </>
   );
 };

@@ -1,7 +1,8 @@
+/* eslint-disable prettier/prettier */
 import config from '../../../config.json';
 
 const sumfetch = async (args: string[]): Promise<string> => {
-  if (config.ascii === 'cveinnt') {
+  if (config.ascii === 'threepanel') {
     return `                                                  
              @@@@@@@@@@@@@                   sumfetch: summary display
         @@@@               @@@@             -----------

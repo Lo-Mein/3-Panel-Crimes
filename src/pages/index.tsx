@@ -11,6 +11,7 @@ interface IndexPageProps {
 }
 
 const IndexPage: React.FC<IndexPageProps> = ({ inputRef }) => {
+  
   const containerRef = React.useRef(null);
   const {
     history,

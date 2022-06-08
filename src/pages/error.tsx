@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import decentralized from '../../public/decentralized.jpg'
+import decentralized from '../assets/decentralized.jpg';
 
 
 const Error = ({pageProps }) => {

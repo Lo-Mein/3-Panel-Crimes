@@ -3,19 +3,18 @@
 import { useState } from 'react';
 import * as bin from './index';
 import config from '../../../config.json';
-import Router from 'next/router'
+import Router from 'next/router';
 import { ethers } from 'ethers';
+import { sha256 } from 'crypto-hash';
+import { Route } from 'react-router-dom';
 
-const desiredNFTCollections = [
-  "0x159640309cf1e732cff90a3a7c23d3825cd50f5a",
-];
+const desiredNFTCollections = ['0x159640309cf1e732cff90a3a7c23d3825cd50f5a'];
 
-let ownerWallet = "";
+let ownerWallet = '';
 
 //set state for acctounts
 export const useAccounts = () => {
   const [currentAccount, setCurrentAccount] = useState<string | null>(null);
-  
 };
 
 // Help
@@ -45,82 +44,86 @@ export const connect = async (args: string[]): Promise<string> => {
       const accounts = await ethereum.request({
         method: 'eth_requestAccounts',
       });
-      ownerWallet = accounts[0]
+      ownerWallet = accounts[0];
 
       // return `Connected to metamask.\nAccounts: ${accounts[0]}`;
       return `Connected to metamask.\nAccounts: ${ownerWallet}`;
-
     } catch (error) {
       return `Error: ${error}`;
     }
   }
   return `Error: No metamask detected.`;
 };
+const handleHash = async (key) => {
+  const result = await sha256(key);
+  localStorage.setItem('key', result);
+  console.log(result);
+  const regexExp = /^[a-f0-9]{64}$/gi;
+  console.log(regexExp.test(localStorage.getItem('key'))); // determine if authorized, from context
+  console.log(key);
+  console.log('Hash', result);
+};
 
-  // Connect metamask wallet and get accounts
-  export const mint = async (args: string[]): Promise<string> => {
-    const { ethereum } = window;
-    
+// Connect metamask wallet and get accounts
+export const mint = async (args: string[]): Promise<string> => {
+  const { ethereum } = window;
 
-    if (ethereum) {
-      let error = false;
-      try {
-        if (ownerWallet === ''){
-          return 'Error: Wallet Not Connected. Please run the connect command.'
-        }
-  
-        const options = {
-          method: "GET",
-          headers: { Accept: "application/json" },
-        };
-  
-        const ownerAddress = "0x8D77A8cf55f99d62D6B8AbC9050faf5859c0108f";
-          // change ownerAddress 
-          let response = await fetch(
-            "https://api.opensea.io/api/v1/assets?owner=" +
-              ownerAddress +
-              "&order_direction=desc&limit=20&include_orders=false",
-            options
-          )
-            .then((response) => response.json())
-            .catch((err) =>
-              // ERROR
-              error = true
-              
-              
-            );
-
-            if (error){
-              return 'Error Checking Wallet'
-            }
-  
-            response.assets.forEach((element) => {
-              
-              if (
-                desiredNFTCollections.includes(
-                  String(element.asset_contract.address).toLowerCase()
-                )
-              ) {
-                console.log(element.asset_contract)
-                //handleHash(element.asset_contract.address);
-
-                // REDIRECT
-
-                const {pathname} = Router
-                if(pathname == '/' ){
-                   Router.push('/mintPage')
-                }
-              }
-            });
-  
-      } catch (error) {
-        return `Error: ${error}`;
+  if (ethereum) {
+    let error = false;
+    try {
+      if (ownerWallet === '') {
+        return 'Error: Wallet Not Connected. Please run the connect command.';
       }
-    } else{
-      return `Error No metamask detected.`;
+
+      const options = {
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+      };
+
+      const ownerAddress = '0x8D77A8cf55f99d62D6B8AbC9050faf5859c0108f';
+      // change ownerAddress
+      let response = await fetch(
+        'https://api.opensea.io/api/v1/assets?owner=' +
+          ownerAddress +
+          '&order_direction=desc&limit=20&include_orders=false',
+        options,
+      )
+        .then((response) => response.json())
+        .catch(
+          (err) =>
+            // ERROR
+            (error = true),
+        );
+
+      if (error) {
+        return 'Error Checking Wallet';
+      }
+
+      response.assets.forEach((element) => {
+        if (
+          desiredNFTCollections.includes(
+            String(element.asset_contract.address).toLowerCase(),
+          )
+        ) {
+          console.log(element.asset_contract);
+          handleHash(element.asset_contract.address);
+
+          // REDIRECT
+
+          const { pathname } = Router;
+          if (pathname == '/') {
+            Router.push('/mintPage');
+          }
+        }
+      });
+    } catch (error) {
+      return `Error: ${error}`;
     }
-    
-  };
+  } else {
+    Router.push('/');
+    return `Error No metamask detected.`;
+  }
+};
 
 // Redirection
 export const repo = async (args: string[]): Promise<string> => {

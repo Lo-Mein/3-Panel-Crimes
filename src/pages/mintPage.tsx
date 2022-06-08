@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 
 
 
+
 const contractAddress = "0xDF27FbDcfC0644d425e1C68539118C8f3A6BbddE";
 const abi = contract.abi;
 const desiredNFTCollections = [
@@ -16,6 +17,9 @@ const MintPage = ({pageProps }) => {
   const [errorState, setErrorState] = useState(false);
   const [successState, setSuccessState] = useState(false);
   const [imageURLs, setImageURLs] = useState([]);
+
+
+
 
 
   const MintNFTHandler = async () => {
@@ -119,7 +123,7 @@ const MintPage = ({pageProps }) => {
                 
                 setImageURLs(imageURLs => [...imageURLs, stateDict])
                 
-                
+      
             }
             });
 

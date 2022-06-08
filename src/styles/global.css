@@ -39,3 +39,59 @@ div#__next > div {
 ::-webkit-scrollbar-thumb:hover {
   background: #ff8037;
 }
+
+.hero {
+  height: 100vh;
+  position: relative;
+  color: #fff;
+}
+.hero .hero-content {
+  text-align: center;
+  position: absolute;
+}
+
+.hero .overlay-itro {
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 0;
+  left: 0px;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.9;
+}
+.hero .hero-title {
+  color: #fff;
+  font-weight: 600;
+  font-size: 3rem;
+}
+
+@media (min-width: 768px) {
+  .hero .hero-title {
+    font-size: 4.5rem;
+  }
+}
+
+.hero .hero-subtitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.bg-image {
+  background-image: url('../assets/error-bg.gif');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+}
+
+.display-table {
+  width: 100%;
+  height: 100%;
+  display: table;
+}
+
+.table-cell {
+  display: table-cell;
+  vertical-align: middle;
+}

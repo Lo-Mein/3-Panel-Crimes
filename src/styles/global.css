@@ -44,6 +44,7 @@ div#__next > div {
   height: 100vh;
   position: relative;
   color: #fff;
+  background-image: url('../assets/ezgif.com-gif-maker\ \(4\).gif');
 }
 .hero .hero-content {
   text-align: center;
@@ -94,4 +95,29 @@ div#__next > div {
 .table-cell {
   display: table-cell;
   vertical-align: middle;
+}
+.buyNFT{
+  cursor: pointer;
+  color: rgb(0, 255, 17);
+  border-radius: 15px 15px;
+  padding: 15px;
+  border: 2px solid rgb(0, 255, 17);
+  font-size: 2rem;
+  margin-top: 80px;
+  
+  
+}
+.mint-nft-button{
+  cursor: pointer;
+  color: rgb(0, 255, 17);
+  border-radius: 15px 15px;
+  padding: 15px;
+  border: 2px solid rgb(0, 255, 17);
+  font-size: 2rem;
+}
+.nftContainer{
+  display: flex;
+}
+.picture1{
+  margin-right: 30px;
 }

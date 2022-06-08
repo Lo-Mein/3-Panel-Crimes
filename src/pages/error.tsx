@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import decentralized from '../../public/decentralized.jpg';
 import Lottie from 'react-lottie';
+import Typed from 'react-typed';
 
 const Error = ({ pageProps }) => {
   const [displayGlitch, setDisplayGlitch] = useState(false);
@@ -26,7 +27,8 @@ const Error = ({ pageProps }) => {
   if (loading) {
     return (
       <div className="hero">
-        <Lottie options={defultOptions} height={400} width={400} />
+        {/* <Lottie options={defultOptions} height={400} width={400} /> */}
+        
       </div>
     );
   } else {
@@ -37,15 +39,18 @@ const Error = ({ pageProps }) => {
           <div className="table-cell">
             <div style={{ maxWidth: '100%' }}>
               <h1 className="hero-title">
-                Hi
-                {/* <Typed
-                  strings={["ACCESS GRANTED", "CLAIM YOUR PRIZE"]}
+                {/* Error, you do not have a required NFT. 
+                You can buy one below 👇 */}
+                <Typed
+                  strings={["ERROR, NFT NOT DETECTED", "BUY A CORRECT ONE BELOW 👇"]}
                   loop
                   typeSpeed={75}
                   backSpeed={50}
                   backDelay={1000}
-                /> */}
+                />
               </h1>
+              <a href='https://opensea.io/threepanelcrimes' target={"_blank"}rel="noreferrer" >
+              <button className='buyNFT'><h5>Buy</h5></button></a>
             </div>
           </div>
         </div>

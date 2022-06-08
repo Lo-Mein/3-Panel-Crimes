@@ -1,14 +1,23 @@
-import React from "react";
-import { Outlet, Navigate } from "react-router-dom";
+import React from 'react'
+import  Router  from 'next/router'
 
-const RouteGuard = () => {
-  const regexExp = /^[a-f0-9]{64}$/gi;
+const RouteGuard = (WrappedComponent)=>{
+ // eslint-disable-next-line react/display-name
+ return (props)=>{
+   if(typeof window !=="undefined"){
+     const key = localStorage.getItem("key");
+     console.log('keysss', key)
 
-  const key = regexExp.test(localStorage.getItem("key")); // determine if authorized, from context or however you're doing it
-
-  // If authorized, return an outlet that will render child elements
-  // If not, return element that will navigate to the landing page
-  return key ? <Outlet /> : <Navigate to="/" />;
+     if(!key){
+       Router.replace("/error");
+       return null;
+     }
+     return (
+     <div><WrappedComponent {...props}/>
+     </div>
+     )
+   }
+   return null;
+ };
 };
-
 export default RouteGuard;

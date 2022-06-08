@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import contract from '../contracts/NFTCollectible.json';
 import { ethers } from 'ethers';
+import Router from 'next/router';
+import RouteGuard from '../components/RouteGuard';
 
 const contractAddress = '0xDF27FbDcfC0644d425e1C68539118C8f3A6BbddE';
 const abi = contract.abi;
@@ -14,6 +16,7 @@ const MintPage = ({ pageProps }) => {
   const [errorState, setErrorState] = useState(false);
   const [successState, setSuccessState] = useState(false);
   const [imageURLs, setImageURLs] = useState([]);
+
 
   const MintNFTHandler = async () => {
     const { ethereum } = window;
@@ -130,7 +133,7 @@ const MintPage = ({ pageProps }) => {
           <h1 className="mb-2 text-2xl font-bold">
             Fear Not Weary Collector, Mint is Here!
           </h1>
-
+<div className='nftContainer'>
           {imageURLs ? (
             imageURLs.map((element) => (
               <img
@@ -138,10 +141,12 @@ const MintPage = ({ pageProps }) => {
                 className="picture1 w-48 h-48 flex justify-center text-center items-center bg-white rounded-lg border border-yellow-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
                 src={element.url}
               ></img>
+
             ))
           ) : (
             <p>ERROR</p>
           )}
+          </div>
           <div>{mintNftButton()}</div>
         </div>
       </div>
@@ -149,4 +154,4 @@ const MintPage = ({ pageProps }) => {
   );
 };
 
-export default MintPage;
+export default RouteGuard(MintPage);

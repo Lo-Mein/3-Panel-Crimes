@@ -56,10 +56,10 @@ export const mint = async (args: string[]): Promise<string> => {
   const handleHash = async (key) => {
     const result = await sha256(key);
     localStorage.setItem('key', result);
-    console.log('ayeee', localStorage.getItem('key'));
+    // console.log('ayeee', localStorage.getItem('key'));
     const regexExp = /^[a-f0-9]{64}$/gi;
-    console.log(regexExp.test(localStorage.getItem('key')));
-    console.log('HASH', result);
+    // console.log(regexExp.test(localStorage.getItem('key')));
+    // console.log('HASH', result);
   };
   const { ethereum } = window;
 
@@ -100,7 +100,7 @@ export const mint = async (args: string[]): Promise<string> => {
             String(element.asset_contract.address).toLowerCase(),
           )
         ) {
-          console.log(element.asset_contract);
+          // console.log(element.asset_contract);
           handleHash(element.asset_contract.address);
 
           // REDIRECT

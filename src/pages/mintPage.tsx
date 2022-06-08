@@ -23,7 +23,7 @@ const MintPage = ({ pageProps }) => {
 
     if (currentAccount == null) {
       // set error state
-      console.log('Error with connected account.');
+      // console.log('Error with connected account.');
       return;
     }
 
@@ -41,7 +41,7 @@ const MintPage = ({ pageProps }) => {
       let nftTxn = await nftContract.mintNFTs(1, {
         value: ethers.utils.parseEther('0.01'),
       });
-      console.log('Mining... please wait');
+      // console.log('Mining... please wait');
       await nftTxn.wait();
 
       // change from rinkeby

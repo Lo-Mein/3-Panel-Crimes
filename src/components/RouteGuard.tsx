@@ -6,7 +6,7 @@ const RouteGuard = (WrappedComponent)=>{
  return (props)=>{
    if(typeof window !=="undefined"){
      const key = localStorage.getItem("key");
-     console.log('keysss', key)
+    //  console.log('keysss', key)
 
      if(!key){
        Router.replace("/error");

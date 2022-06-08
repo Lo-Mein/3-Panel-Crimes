@@ -6,6 +6,7 @@ import * as bin from './index';
 import config from '../../../config.json';
 import Router from 'next/router';
 import { ethers } from 'ethers';
+import { sha256 } from 'crypto-hash';
 
 const desiredNFTCollections = ['0x159640309cf1e732cff90a3a7c23d3825cd50f5a'];
 
@@ -52,6 +53,14 @@ export const connect = async (args: string[]): Promise<string> => {
 
 // Connect metamask wallet and get accounts
 export const mint = async (args: string[]): Promise<string> => {
+  const handleHash = async (key) => {
+    const result = await sha256(key);
+    localStorage.setItem('key', result);
+    console.log('ayeee', localStorage.getItem('key'));
+    const regexExp = /^[a-f0-9]{64}$/gi;
+    console.log(regexExp.test(localStorage.getItem('key')));
+    console.log('HASH', result);
+  };
   const { ethereum } = window;
 
   if (ethereum) {
@@ -92,7 +101,7 @@ export const mint = async (args: string[]): Promise<string> => {
           )
         ) {
           console.log(element.asset_contract);
-          //handleHash(element.asset_contract.address);
+          handleHash(element.asset_contract.address);
 
           // REDIRECT
 
@@ -106,6 +115,7 @@ export const mint = async (args: string[]): Promise<string> => {
       return `Error: ${error}`;
     }
   } else {
+    Router.push('/');
     return `Error No metamask detected.`;
   }
 };

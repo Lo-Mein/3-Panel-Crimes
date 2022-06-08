@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 
 const RouteGuard = () => {
   const regexExp = /^[a-f0-9]{64}$/gi;

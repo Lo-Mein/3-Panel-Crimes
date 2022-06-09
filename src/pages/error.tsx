@@ -28,7 +28,6 @@ const Error = ({ pageProps }) => {
     return (
       <div className="hero">
         {/* <Lottie options={defultOptions} height={400} width={400} /> */}
-        
       </div>
     );
   } else {
@@ -42,15 +41,22 @@ const Error = ({ pageProps }) => {
                 {/* Error, you do not have a required NFT. 
                 You can buy one below 👇 */}
                 <Typed
-                  strings={["ERROR, NFT NOT DETECTED", "BUY A CORRECT ONE BELOW 👇"]}
+                  strings={['ERROR', 'NFT NOT DETECTED', 'PURCHASE BELOW 👇']}
                   loop
                   typeSpeed={75}
                   backSpeed={50}
                   backDelay={1000}
                 />
               </h1>
-              <a href='https://opensea.io/threepanelcrimes' target={"_blank"}rel="noreferrer" >
-              <button className='buyNFT'><h5>Buy</h5></button></a>
+              <a
+                href="https://opensea.io/threepanelcrimes"
+                target={'_blank'}
+                rel="noreferrer"
+              >
+                <button className="buyNFT">
+                  <h5>Buy</h5>
+                </button>
+              </a>
             </div>
           </div>
         </div>

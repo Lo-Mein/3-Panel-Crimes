@@ -109,13 +109,17 @@ export const mint = async (args: string[]): Promise<string> => {
           if (pathname == '/') {
             Router.push('/mintPage');
           }
+        } else {
+          console.log('Not a NFT');
+          return 'Error: No NFT Collection Found';
         }
       });
     } catch (error) {
       return `Error: ${error}`;
     }
   } else {
-    Router.push('/');
+    console.log('No metamask detected.');
+    Router.push('/error');
     return `Error No metamask detected.`;
   }
 };

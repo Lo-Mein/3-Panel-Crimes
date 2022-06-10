@@ -116,6 +116,7 @@ const MintPage = ({ pageProps }) => {
 
             setImageURLs((imageURLs) => [...imageURLs, stateDict]);
           }
+ 
         });
 
         console.log('Obtained image URLs');

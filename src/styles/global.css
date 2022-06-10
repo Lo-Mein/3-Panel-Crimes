@@ -40,6 +40,7 @@ div#__next > div {
   background: #ff8037;
 }
 
+/* ERROR PAGE */
 .hero {
   height: 100vh;
   position: relative;
@@ -73,6 +74,13 @@ div#__next > div {
   }
 }
 
+/* css for mobile phones */
+@media (max-width: 768px) {
+  .hero .hero-title {
+    font-size: 2rem;
+  }
+}
+
 .hero .hero-subtitle {
   font-size: 1.5rem;
   font-weight: 600;
@@ -96,7 +104,10 @@ div#__next > div {
   display: table-cell;
   vertical-align: middle;
 }
-.buyNFT{
+
+/* MINT PAGE */
+
+.buyNFT {
   cursor: pointer;
   color: rgb(0, 255, 17);
   border-radius: 15px 15px;
@@ -104,10 +115,8 @@ div#__next > div {
   border: 2px solid rgb(0, 255, 17);
   font-size: 2rem;
   margin-top: 80px;
-  
-  
 }
-.mint-nft-button{
+.mint-nft-button {
   cursor: pointer;
   color: rgb(0, 255, 17);
   border-radius: 15px 15px;
@@ -115,9 +124,9 @@ div#__next > div {
   border: 2px solid rgb(0, 255, 17);
   font-size: 2rem;
 }
-.nftContainer{
+.nftContainer {
   display: flex;
 }
-.picture1{
+.picture1 {
   margin-right: 30px;
 }

@@ -17,7 +17,6 @@ const MintPage = ({ pageProps }) => {
   const [successState, setSuccessState] = useState(false);
   const [imageURLs, setImageURLs] = useState([]);
 
-
   const MintNFTHandler = async () => {
     const { ethereum } = window;
 
@@ -128,30 +127,27 @@ const MintPage = ({ pageProps }) => {
   }, []);
 
   return (
-    <>
-      <div className="text-light-foreground dark:text-dark-foreground min-w-max text-md md:min-w-full md:text-base content-start">
-        <div className="grid place-items-center h-96 w-full space-y-6">
-          <h1 className="mb-2 text-2xl font-bold">
-            Fear Not Weary Collector, Mint is Here!
-          </h1>
-<div className='nftContainer'>
+    <div className="text-light-foreground dark:text-dark-foreground min-w-max text-md md:min-w-full md:text-base content-start">
+      <div className="grid place-items-center h-96 w-full space-y-6">
+        <h1 className="mb-2 text-2xl font-bold">
+          Fear Not Weary Collector, Mint is Here!
+        </h1>
+        <div className="nftContainer">
           {imageURLs ? (
             imageURLs.map((element) => (
               <img
                 key={element.key}
                 className="picture1 w-48 h-48 flex justify-center text-center items-center bg-white rounded-lg border border-yellow-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
                 src={element.url}
-              ></img>
-
+              />
             ))
           ) : (
             <p>ERROR</p>
           )}
-          </div>
-          <div>{mintNftButton()}</div>
         </div>
+        <div>{mintNftButton()}</div>
       </div>
-    </>
+    </div>
   );
 };
 

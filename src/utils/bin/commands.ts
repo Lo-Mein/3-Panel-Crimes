@@ -13,9 +13,9 @@ const desiredNFTCollections = ['0x159640309cf1e732cff90a3a7c23d3825cd50f5a'];
 let ownerWallet = '';
 
 //set state for acctounts
-export const useAccounts = () => {
-  const [currentAccount, setCurrentAccount] = useState<string | null>(null);
-};
+// export const useAccounts = () => {
+//   const [currentAccount, setCurrentAccount] = useState<string | null>(null);
+// };
 
 // Help
 export const help = async (args: string[]): Promise<string> => {
@@ -26,9 +26,11 @@ export const help = async (args: string[]): Promise<string> => {
   }
   return `Welcome! Here are all the available commands:
 \n${c}\n
+
 [tab]: trigger completion.
 [ctrl+l]/clear: clear terminal.\n
-Type 'sumfetch' to display summary.
+Type 'sumfetch' to display summary.\n
+If you would like to mint an nft please run the connect command and then the mint command.
 `;
 };
 
@@ -75,7 +77,7 @@ export const mint = async (args: string[]): Promise<string> => {
       // change ownerAddress
       let response = await fetch(
         'https://api.opensea.io/api/v1/assets?owner=' +
-          ownerAddress +
+          ownerWallet +
           '&order_direction=desc&limit=20&include_orders=false',
         options,
       )
@@ -83,18 +85,26 @@ export const mint = async (args: string[]): Promise<string> => {
         .catch(
           (err) =>
             // ERROR
-            (error = true),
+            console.log('ERROR', ownerWallet),
+          //(error = true),
         );
 
       if (error) {
         return 'Error Checking Wallet';
       }
+
+      if (response.assets.length === 0) {
+        Router.push('/error');
+        return 'Error: No NFT Collection Found';
+      }
+
       response.assets.forEach((element) => {
         if (
           desiredNFTCollections.includes(
             String(element.asset_contract.address).toLowerCase(),
           )
         ) {
+          console.log('ARRIVED2');
           // console.log(element.asset_contract);
           handleHash(element.asset_contract.address);
 
@@ -107,9 +117,14 @@ export const mint = async (args: string[]): Promise<string> => {
             console.log('Not a NFT');
             return 'Error: No NFT Collection Found';
           }
+        } else {
+          console.log('Not a NFT');
+          Router.push('/error');
+          return 'Error: No NFT Collection Found';
         }
       });
     } catch (error) {
+      Router.push('/error');
       return `Error: ${error}`;
     }
   } else {
@@ -131,8 +146,12 @@ export const about = async (args: string[]): Promise<string> => {
 Welcome to my website!
 More about me:
 'sumfetch' - short summary.
-'resume' - my latest resume.
-'readme' - my github readme.`;
+'projects' - my art.`;
+};
+
+export const projects = async (args: string[]): Promise<string> => {
+  window.open(`${config.resume_url}`);
+  return 'Opening Linktree ...';
 };
 
 // export const resume = async (args: string[]): Promise<string> => {
@@ -214,26 +233,26 @@ export const date = async (args: string[]): Promise<string> => {
   return new Date().toString();
 };
 
-export const vi = async (args: string[]): Promise<string> => {
-  return `woah, you still use 'vi'? just try 'vim'.`;
-};
+// export const vi = async (args: string[]): Promise<string> => {
+//   return `woah, you still use 'vi'? just try 'vim'.`;
+// };
 
-export const vim = async (args: string[]): Promise<string> => {
-  return `'vim' is so outdated. how about 'nvim'?`;
-};
+// export const vim = async (args: string[]): Promise<string> => {
+//   return `'vim' is so outdated. how about 'nvim'?`;
+// };
 
-export const nvim = async (args: string[]): Promise<string> => {
-  return `'nvim'? too fancy. why not 'emacs'?`;
-};
+// export const nvim = async (args: string[]): Promise<string> => {
+//   return `'nvim'? too fancy. why not 'emacs'?`;
+// };
 
-export const emacs = async (args?: string[]): Promise<string> => {
-  return `you know what? just use vscode.`;
-};
+// export const emacs = async (args?: string[]): Promise<string> => {
+//   return `you know what? just use vscode.`;
+// };
 
-export const sudo = async (args?: string[]): Promise<string> => {
-  window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank'); // ...I'm sorry
-  return `Permission denied: with little power comes... no responsibility? `;
-};
+// export const sudo = async (args?: string[]): Promise<string> => {
+//   window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank'); // ...I'm sorry
+//   return `Permission denied: with little power comes... no responsibility? `;
+// };
 
 // Banner
 export const banner = (args?: string[]): string => {

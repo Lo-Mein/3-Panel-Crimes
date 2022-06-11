@@ -56,10 +56,6 @@ export const mint = async (args: string[]): Promise<string> => {
   const handleHash = async (key) => {
     const result = await sha256(key);
     localStorage.setItem('key', result);
-    // console.log('ayeee', localStorage.getItem('key'));
-    const regexExp = /^[a-f0-9]{64}$/gi;
-    // console.log(regexExp.test(localStorage.getItem('key')));
-    // console.log('HASH', result);
   };
   const { ethereum } = window;
 
@@ -93,7 +89,6 @@ export const mint = async (args: string[]): Promise<string> => {
       if (error) {
         return 'Error Checking Wallet';
       }
-
       response.assets.forEach((element) => {
         if (
           desiredNFTCollections.includes(
@@ -108,10 +103,10 @@ export const mint = async (args: string[]): Promise<string> => {
           const { pathname } = Router;
           if (pathname == '/') {
             Router.push('/mintPage');
+          } else {
+            console.log('Not a NFT');
+            return 'Error: No NFT Collection Found';
           }
-        } else {
-          console.log('Not a NFT');
-          return 'Error: No NFT Collection Found';
         }
       });
     } catch (error) {

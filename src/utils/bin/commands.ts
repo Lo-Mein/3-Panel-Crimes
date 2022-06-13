@@ -77,7 +77,7 @@ export const mint = async (args: string[]): Promise<string> => {
       // change ownerAddress
       let response = await fetch(
         'https://api.opensea.io/api/v1/assets?owner=' +
-          ownerWallet +
+          ownerAddress +
           '&order_direction=desc&limit=20&include_orders=false',
         options,
       )

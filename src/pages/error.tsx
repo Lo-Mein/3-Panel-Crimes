@@ -32,7 +32,7 @@ const Error = ({ pageProps }) => {
     );
   } else {
     return (
-      <div className="hero bg-image">
+      <div className="hero bg-image error">
         <div className="overlay-itro"></div>
         <div className="hero-content display-table">
           <div className="table-cell">

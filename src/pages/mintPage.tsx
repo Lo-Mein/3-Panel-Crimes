@@ -4,6 +4,7 @@ import contract from '../contracts/NFTCollectible.json';
 import { ethers } from 'ethers';
 import Router from 'next/router';
 import RouteGuard from '../components/RouteGuard';
+import Image from 'next/image';
 
 const contractAddress = '0xDF27FbDcfC0644d425e1C68539118C8f3A6BbddE';
 const abi = contract.abi;
@@ -15,6 +16,7 @@ const MintPage = ({ pageProps }) => {
   const [errorState, setErrorState] = useState(false);
   const [successState, setSuccessState] = useState(false);
   const [imageURLs, setImageURLs] = useState([]);
+  //image urls for the nft
 
   useEffect(() => {
     if (!localStorage.getItem('key')) {
@@ -94,7 +96,7 @@ const MintPage = ({ pageProps }) => {
           headers: { Accept: 'application/json' },
         };
 
-        const ownerAddress = '0x62dE8494185454D1e0Ca800e52633A04Da2BFe67';
+        const ownerAddress = '0x8D77A8cf55f99d62D6B8AbC9050faf859c0108f';
 
         let response = await fetch(
           'https://api.opensea.io/api/v1/assets?owner=' +
@@ -122,37 +124,40 @@ const MintPage = ({ pageProps }) => {
           }
         });
 
-        console.log('Obtained image URLs');
+        console.log('Obtained image URLs', imageURLs);
       } catch (err) {
         console.error('Error Obtaining Image URLs', err);
       }
     }
     fetchData();
-  }, []);
+  }, [imageURLs]);
 
   return (
-    <div className="text-light-foreground dark:text-dark-foreground min-w-max text-md md:min-w-full md:text-base content-start">
-      <div className="grid place-items-center h-96 w-full space-y-6">
-        <h1 className="mb-2 text-2xl font-bold">
-          Fear Not Weary Collector, Mint is Here!
-        </h1>
-        <div className="nftContainer">
-          {imageURLs ? (
-            imageURLs.map((element) => (
-              <img
-                key={element.key}
-                className="picture1 w-48 h-48 flex justify-center text-center items-center bg-white rounded-lg border border-yellow-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
-                src={element.url}
-              />
-            ))
-          ) : (
-            <p>ERROR</p>
-          )}
-        </div>
+    <div className="mint-container">
+      <div className="mint-header">
+        <h1 className="mint-title">Fear Not Wear Collector, Mint is Here!</h1>
+      </div>
+      <div className="mint-body">
+        {imageURLs ? (
+          imageURLs.map((element) => (
+            <Image
+              key={element.key}
+              className="mint-image"
+              src={element.url}
+              alt="NFT Collection"
+              height={200}
+              width={200}
+            />
+          ))
+        ) : (
+          <p className="mint-subtitle">ERROR</p>
+        )}
+      </div>
+      <div className="mint-footer">
         <div>{mintNftButton()}</div>
       </div>
     </div>
   );
 };
 
-export default RouteGuard(MintPage);
+export default MintPage;

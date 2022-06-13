@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-/* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
 import contract from '../contracts/NFTCollectible.json';
 import { ethers } from 'ethers';
@@ -16,6 +15,13 @@ const MintPage = ({ pageProps }) => {
   const [errorState, setErrorState] = useState(false);
   const [successState, setSuccessState] = useState(false);
   const [imageURLs, setImageURLs] = useState([]);
+
+
+useEffect(() => {
+  if(!localStorage.getItem('key')){
+    Router.push('/error');
+  }
+},[])
 
   const MintNFTHandler = async () => {
     const { ethereum } = window;
@@ -89,7 +95,7 @@ const MintPage = ({ pageProps }) => {
           headers: { Accept: 'application/json' },
         };
 
-        const ownerAddress = '0x8D77A8cf55f99d62D6B8AbC9050faf5859c0108f';
+        const ownerAddress = '0x62dE8494185454D1e0Ca800e52633A04Da2BFe67';
 
         let response = await fetch(
           'https://api.opensea.io/api/v1/assets?owner=' +
@@ -103,6 +109,9 @@ const MintPage = ({ pageProps }) => {
             console.error('Error Obtaining Image URLs', err),
           );
 
+          
+
+
         response.assets.forEach((element) => {
           if (
             desiredNFTCollections.includes(
@@ -115,12 +124,16 @@ const MintPage = ({ pageProps }) => {
 
             setImageURLs((imageURLs) => [...imageURLs, stateDict]);
           }
-        });
+          
+ 
+        }); 
+        
 
         console.log('Obtained image URLs');
       } catch (err) {
         console.error('Error Obtaining Image URLs', err);
       }
+     
     }
     fetchData();
   }, []);

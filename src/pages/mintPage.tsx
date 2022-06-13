@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 const contractAddress = '0xDF27FbDcfC0644d425e1C68539118C8f3A6BbddE';
 const abi = contract.abi;
-const desiredNFTCollections = ['0x159640309cf1e732cff90a3a7c23d3825cd50f5a'];
+const desiredNFTCollections = ['0xc4af0400ada37f36f17d09fbd7341d91bd410110'];
 
 const MintPage = ({ pageProps }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -96,7 +96,7 @@ const MintPage = ({ pageProps }) => {
           headers: { Accept: 'application/json' },
         };
 
-        const ownerAddress = '0x8D77A8cf55f99d62D6B8AbC9050faf859c0108f';
+        const ownerAddress = '0x91D398D1E6ee7a50B2169fa4ceCC7586e4325e90';
 
         let response = await fetch(
           'https://api.opensea.io/api/v1/assets?owner=' +
@@ -130,8 +130,9 @@ const MintPage = ({ pageProps }) => {
       }
     }
     fetchData();
-  }, [imageURLs]);
+  }, []);
 
+  console.log(imageURLs);
   return (
     <div className="mint-container">
       <div className="mint-header">
@@ -140,7 +141,7 @@ const MintPage = ({ pageProps }) => {
       <div className="mint-body">
         {imageURLs ? (
           imageURLs.map((element) => (
-            <Image
+            <img
               key={element.key}
               className="mint-image"
               src={element.url}

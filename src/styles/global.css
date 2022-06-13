@@ -45,10 +45,9 @@ div#__next > div {
   height: 100vh;
   position: relative;
   color: #fff;
-}
-.error {
   background-image: url('../assets/ezgif.com-gif-maker\ \(4\).gif');
 }
+
 .hero .hero-content {
   text-align: center;
   position: absolute;
@@ -164,6 +163,7 @@ div#__next > div {
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+  padding: 20px;
 }
 
 .mint-subtitle {

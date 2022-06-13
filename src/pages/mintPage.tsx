@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import contract from '../contracts/NFTCollectible.json';
 import { ethers } from 'ethers';
 import Router from 'next/router';
-import RouteGuard from '../components/RouteGuard';
 
 const contractAddress = '0xDF27FbDcfC0644d425e1C68539118C8f3A6BbddE';
 const abi = contract.abi;
@@ -15,12 +14,9 @@ const MintPage = ({ pageProps }) => {
   const [errorState, setErrorState] = useState(false);
   const [successState, setSuccessState] = useState(false);
   const [imageURLs, setImageURLs] = useState([]);
+  const [key, setKey] = useState('');
 
-  useEffect(() => {
-    if (!localStorage.getItem('key')) {
-      Router.push('/error');
-    }
-  }, []);
+
 
   const MintNFTHandler = async () => {
     const { ethereum } = window;
@@ -155,4 +151,4 @@ const MintPage = ({ pageProps }) => {
   );
 };
 
-export default RouteGuard(MintPage);
+export default (MintPage);

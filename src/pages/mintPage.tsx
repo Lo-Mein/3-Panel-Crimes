@@ -16,12 +16,11 @@ const MintPage = ({ pageProps }) => {
   const [successState, setSuccessState] = useState(false);
   const [imageURLs, setImageURLs] = useState([]);
 
-
-useEffect(() => {
-  if(!localStorage.getItem('key')){
-    Router.push('/error');
-  }
-},[])
+  useEffect(() => {
+    if (!localStorage.getItem('key')) {
+      Router.push('/error');
+    }
+  }, []);
 
   const MintNFTHandler = async () => {
     const { ethereum } = window;
@@ -109,9 +108,6 @@ useEffect(() => {
             console.error('Error Obtaining Image URLs', err),
           );
 
-          
-
-
         response.assets.forEach((element) => {
           if (
             desiredNFTCollections.includes(
@@ -124,16 +120,12 @@ useEffect(() => {
 
             setImageURLs((imageURLs) => [...imageURLs, stateDict]);
           }
-          
- 
-        }); 
-        
+        });
 
         console.log('Obtained image URLs');
       } catch (err) {
         console.error('Error Obtaining Image URLs', err);
       }
-     
     }
     fetchData();
   }, []);

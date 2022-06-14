@@ -138,7 +138,7 @@ div#__next > div {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 100%;
   flex-wrap: wrap;
   width: 100%;
 }
@@ -155,13 +155,19 @@ div#__next > div {
   .mint-title {
     font-size: 14px;
   }
+  .mint-body {
+    flex-direction: column !important;
+  }
 }
 
-.mint-images {
+.mint-body {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.mint-images {
   margin-bottom: 20px;
   padding: 20px;
 }

@@ -8,7 +8,7 @@ import Router from 'next/router';
 import { ethers } from 'ethers';
 import { sha256 } from 'crypto-hash';
 
-const desiredNFTCollections = ['0xc4af0400ADa37f36F17d09Fbd7341D91bD410110'];
+const desiredNFTCollections = ['0xc4af0400ada37f36f17d09fbd7341d91bd410110'];
 
 let ownerWallet = '';
 

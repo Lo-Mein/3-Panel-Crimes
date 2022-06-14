@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import contract from '../contracts/NFTCollectible.json';
@@ -137,7 +139,7 @@ const MintPage = ({ pageProps }) => {
           imageURLs.map((element) => (
             <img
               key={element.key}
-              className="mint-image"
+              className="mint-images"
               src={element.url}
               alt="NFT Collection"
               height={200}

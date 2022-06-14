@@ -5,7 +5,6 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { RouteGuard } from '../components/RouteGuard';
 
-
 const App = ({ Component, pageProps }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -30,7 +29,7 @@ const App = ({ Component, pageProps }) => {
       >
         <div className="bg-light-background dark:bg-dark-background w-full h-full p-2">
           <RouteGuard>
-          <Component {...pageProps} inputRef={inputRef} />
+            <Component {...pageProps} inputRef={inputRef} />
           </RouteGuard>
         </div>
       </div>

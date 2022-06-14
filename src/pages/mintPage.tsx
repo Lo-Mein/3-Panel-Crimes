@@ -92,7 +92,7 @@ const MintPage = ({ pageProps }) => {
           headers: { Accept: 'application/json' },
         };
 
-        const ownerAddress = '0x91D398D1E6ee7a50B2169fa4ceCC7586e4325e90';
+        const ownerAddress = '0x8D77A8cf55f99d62D6B8AbC9050faf5859c0108f';
 
         let response = await fetch(
           'https://api.opensea.io/api/v1/assets?owner=' +
@@ -132,7 +132,7 @@ const MintPage = ({ pageProps }) => {
   return (
     <div className="mint-container">
       <div className="mint-header">
-        <h1 className="mint-title">Fear Not Wear Collector, Mint is Here!</h1>
+        <h1 className="mint-title">Fear Not Weary Collector, Mint is Here!</h1>
       </div>
       <div className="mint-body">
         {imageURLs ? (

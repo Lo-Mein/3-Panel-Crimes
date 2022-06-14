@@ -36,11 +36,13 @@ function RouteGuard({ children }) {
         // console.log(regexExp.test(localStorage.getItem('key')));
         if (regexExp.test(localStorage.getItem('key')) && !publicPaths.includes(path)) {
             setAuthorized(true);
+            console.log('authorized');
             router.push({
                 pathname: '/mintPage',
                 query: { returnUrl: router.asPath }
             });
         } else {
+          console.log('not authorized');
             setAuthorized(true);
         }
     }

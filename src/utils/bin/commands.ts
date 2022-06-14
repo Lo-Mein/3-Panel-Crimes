@@ -8,7 +8,7 @@ import Router from 'next/router';
 import { ethers } from 'ethers';
 import { sha256 } from 'crypto-hash';
 
-const desiredNFTCollections = ['0xc4af0400ADa37f36F17d09Fbd7341D91bD410110'];
+const desiredNFTCollections = ['0xc4af0400ada37f36f17d09fbd7341d91bd410110'];
 
 let ownerWallet = '';
 
@@ -74,6 +74,7 @@ export const mint = async (args: string[]): Promise<string> => {
       };
 
       const ownerAddress = '0x91D398D1E6ee7a50B2169fa4ceCC7586e4325e90';
+      
       // change ownerAddress
       let response = await fetch(
         'https://api.opensea.io/api/v1/assets?owner=' +
@@ -119,7 +120,7 @@ export const mint = async (args: string[]): Promise<string> => {
           }
         } else {
           console.log('Not a NFT');
-          // Router.push('/error');
+           // gRouter.push('/error');
           return 'Error: No NFT Collection Found';
         }
       });

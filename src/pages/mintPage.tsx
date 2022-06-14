@@ -130,7 +130,7 @@ const MintPage = ({ pageProps }) => {
   return (
     <div className="mint-container">
       <div className="mint-header">
-        <h1 className="mint-title">Fear Not Wear Collector, Mint is Here!</h1>
+        <h1 className="mint-title">Fear Not Weary Collector, Mint is Here!</h1>
       </div>
       <div className="mint-body">
         {imageURLs ? (

@@ -4,6 +4,7 @@ import '../styles/global.css';
 import Head from 'next/head';
 import Router from 'next/router';
 import { RouteGuard } from '../components/RouteGuard';
+import { AuthProvider } from '../contexts/auth';
 
 
 const App = ({ Component, pageProps }) => {
@@ -29,9 +30,12 @@ const App = ({ Component, pageProps }) => {
         // onClick={onClickAnywhere}
       >
         <div className="bg-light-background dark:bg-dark-background w-full h-full p-2">
-          <RouteGuard>
+          {/* <RouteGuard> */}
+          <AuthProvider>
           <Component {...pageProps} inputRef={inputRef} />
-          </RouteGuard>
+          </AuthProvider>
+          {/* </RouteGuard> */}
+
         </div>
       </div>
     </>

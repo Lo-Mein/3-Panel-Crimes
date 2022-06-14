@@ -77,7 +77,7 @@ export const mint = async (args: string[]): Promise<string> => {
       // change ownerAddress
       let response = await fetch(
         'https://api.opensea.io/api/v1/assets?owner=' +
-          ownerWallet +
+          ownerAddress +
           '&order_direction=desc&limit=20&include_orders=false',
         options,
       )
@@ -119,7 +119,7 @@ export const mint = async (args: string[]): Promise<string> => {
           }
         } else {
           console.log('Not a NFT');
-          Router.push('/error');
+          // Router.push('/error');
           return 'Error: No NFT Collection Found';
         }
       });
@@ -129,7 +129,7 @@ export const mint = async (args: string[]): Promise<string> => {
     }
   } else {
     console.log('No metamask detected.');
-    Router.push('/error');
+    // Router.push('/error');
     return `Error No metamask detected.`;
   }
 };

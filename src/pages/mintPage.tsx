@@ -90,7 +90,7 @@ const MintPage = ({ pageProps }) => {
           headers: { Accept: 'application/json' },
         };
 
-        const ownerAddress = '0x62dE8494185454D1e0Ca800e52633A04Da2BFe67';
+        const ownerAddress = '0x8D77A8cf55f99d62D6B8AbC9050faf5859c0108f';
 
         let response = await fetch(
           'https://api.opensea.io/api/v1/assets?owner=' +

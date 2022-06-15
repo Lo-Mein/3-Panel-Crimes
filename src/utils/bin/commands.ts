@@ -119,7 +119,7 @@ export const mint = async (args: string[]): Promise<string> => {
           }
         } else {
           console.log('Not a NFT');
-          // Router.push('/error');
+          // gRouter.push('/error');
           return 'Error: No NFT Collection Found';
         }
       });

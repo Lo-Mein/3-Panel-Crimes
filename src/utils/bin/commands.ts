@@ -8,7 +8,7 @@ import Router from 'next/router';
 import { ethers } from 'ethers';
 import { sha256 } from 'crypto-hash';
 
-const desiredNFTCollections = ['0xc4af0400ADa37f36F17d09Fbd7341D91bD410110'];
+const desiredNFTCollections = ['0x159640309cf1e732cff90a3a7c23d3825cd50f5a'];
 
 let ownerWallet = '';
 
@@ -73,7 +73,7 @@ export const mint = async (args: string[]): Promise<string> => {
         headers: { Accept: 'application/json' },
       };
 
-      const ownerAddress = '0x91D398D1E6ee7a50B2169fa4ceCC7586e4325e90';
+      const ownerAddress = '0x62dE8494185454D1e0Ca800e52633A04Da2BFe67';
       // change ownerAddress
       let response = await fetch(
         'https://api.opensea.io/api/v1/assets?owner=' +

@@ -35,105 +35,105 @@ If you would like to mint an nft please run the connect command and then the min
 };
 
 // Connect metamask wallet and get accounts
-export const connect = async (args: string[]): Promise<string> => {
-  const { ethereum } = window;
-  if (ethereum) {
-    try {
-      const accounts = await ethereum.request({
-        method: 'eth_requestAccounts',
-      });
-      ownerWallet = accounts[0];
+// export const connect = async (args: string[]): Promise<string> => {
+//   const { ethereum } = window;
+//   if (ethereum) {
+//     try {
+//       const accounts = await ethereum.request({
+//         method: 'eth_requestAccounts',
+//       });
+//       ownerWallet = accounts[0];
 
-      // return `Connected to metamask.\nAccounts: ${accounts[0]}`;
-      return `Connected to metamask.\nAccounts: ${ownerWallet}`;
-    } catch (error) {
-      return `Error: ${error}`;
-    }
-  }
-  return `Error: No metamask detected.`;
-};
+//       // return `Connected to metamask.\nAccounts: ${accounts[0]}`;
+//       return `Connected to metamask.\nAccounts: ${ownerWallet}`;
+//     } catch (error) {
+//       return `Error: ${error}`;
+//     }
+//   }
+//   return `Error: No metamask detected.`;
+// };
 
 // Connect metamask wallet and get accounts
-export const mint = async (args: string[]): Promise<string> => {
-  const handleHash = async (key) => {
-    const result = await sha256(key);
-    localStorage.setItem('key', result);
-  };
-  const { ethereum } = window;
+// export const mint = async (args: string[]): Promise<string> => {
+//   const handleHash = async (key) => {
+//     const result = await sha256(key);
+//     localStorage.setItem('key', result);
+//   };
+//   const { ethereum } = window;
 
-  if (ethereum) {
-    let error = false;
-    try {
-      if (ownerWallet === '') {
-        return 'Error: Wallet Not Connected. Please run the connect command.';
-      }
+//   if (ethereum) {
+//     let error = false;
+//     try {
+//       if (ownerWallet === '') {
+//         return 'Error: Wallet Not Connected. Please run the connect command.';
+//       }
 
-      const options = {
-        method: 'GET',
-        headers: { Accept: 'application/json' },
-      };
+//       const options = {
+//         method: 'GET',
+//         headers: { Accept: 'application/json' },
+//       };
 
-      const ownerAddress = '0x91D398D1E6ee7a50B2169fa4ceCC7586e4325e90';
-      
-      // change ownerAddress
-      let response = await fetch(
-        'https://api.opensea.io/api/v1/assets?owner=' +
-          ownerAddress +
-          '&order_direction=desc&limit=20&include_orders=false',
-        options,
-      )
-        .then((response) => response.json())
-        .catch(
-          (err) =>
-            // ERROR
-            console.log('ERROR', ownerWallet),
-          //(error = true),
-        );
+//       const ownerAddress = '0x91D398D1E6ee7a50B2169fa4ceCC7586e4325e90';
 
-      if (error) {
-        return 'Error Checking Wallet';
-      }
+//       // change ownerAddress
+//       let response = await fetch(
+//         'https://api.opensea.io/api/v1/assets?owner=' +
+//           ownerAddress +
+//           '&order_direction=desc&limit=20&include_orders=false',
+//         options,
+//       )
+//         .then((response) => response.json())
+//         .catch(
+//           (err) =>
+//             // ERROR
+//             console.log('ERROR', ownerWallet),
+//           //(error = true),
+//         );
 
-      if (response.assets.length === 0) {
-        Router.push('/error');
-        return 'Error: No NFT Collection Found';
-      }
+//       if (error) {
+//         return 'Error Checking Wallet';
+//       }
 
-      response.assets.forEach((element) => {
-        if (
-          desiredNFTCollections.includes(
-            String(element.asset_contract.address).toLowerCase(),
-          )
-        ) {
-          console.log('ARRIVED2');
-          // console.log(element.asset_contract);
-          handleHash(element.asset_contract.address);
+//       if (response.assets.length === 0) {
+//         Router.push('/error');
+//         return 'Error: No NFT Collection Found';
+//       }
 
-          // REDIRECT
+//       response.assets.forEach((element) => {
+//         if (
+//           desiredNFTCollections.includes(
+//             String(element.asset_contract.address).toLowerCase(),
+//           )
+//         ) {
+//           console.log('ARRIVED2');
+//           // console.log(element.asset_contract);
+//           handleHash(element.asset_contract.address);
 
-          const { pathname } = Router;
-          if (pathname == '/') {
-            Router.push('/mintPage');
-          } else {
-            console.log('Not a NFT');
-            return 'Error: No NFT Collection Found';
-          }
-        } else {
-          console.log('Not a NFT');
-           // gRouter.push('/error');
-          return 'Error: No NFT Collection Found';
-        }
-      });
-    } catch (error) {
-      Router.push('/error');
-      return `Error: ${error}`;
-    }
-  } else {
-    console.log('No metamask detected.');
-    // Router.push('/error');
-    return `Error No metamask detected.`;
-  }
-};
+//           // REDIRECT
+
+//           const { pathname } = Router;
+//           if (pathname == '/') {
+//             Router.push('/mintPage');
+//           } else {
+//             console.log('Not a NFT');
+//             return 'Error: No NFT Collection Found';
+//           }
+//         } else {
+//           console.log('Not a NFT');
+//            // gRouter.push('/error');
+//           return 'Error: No NFT Collection Found';
+//         }
+//       });
+//     } catch (error) {
+//       Router.push('/error');
+//       return `Error: ${error}`;
+//     }
+//   } else {
+//     console.log('No metamask detected.');
+//     // Router.push('/error');
+//     return `Error No metamask detected.`;
+//   }
+// };
 
 // Redirection
 // export const repo = async (args: string[]): Promise<string> => {
@@ -234,26 +234,26 @@ export const date = async (args: string[]): Promise<string> => {
   return new Date().toString();
 };
 
-// export const vi = async (args: string[]): Promise<string> => {
-//   return `woah, you still use 'vi'? just try 'vim'.`;
-// };
+export const vi = async (args: string[]): Promise<string> => {
+  return `woah, you still use 'vi'? just try 'vim'.`;
+};
 
-// export const vim = async (args: string[]): Promise<string> => {
-//   return `'vim' is so outdated. how about 'nvim'?`;
-// };
+export const vim = async (args: string[]): Promise<string> => {
+  return `'vim' is so outdated. how about 'nvim'?`;
+};
 
-// export const nvim = async (args: string[]): Promise<string> => {
-//   return `'nvim'? too fancy. why not 'emacs'?`;
-// };
+export const nvim = async (args: string[]): Promise<string> => {
+  return `'nvim'? too fancy. why not 'emacs'?`;
+};
 
-// export const emacs = async (args?: string[]): Promise<string> => {
-//   return `you know what? just use vscode.`;
-// };
+export const emacs = async (args?: string[]): Promise<string> => {
+  return `you know what? just use vscode.`;
+};
 
-// export const sudo = async (args?: string[]): Promise<string> => {
-//   window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank'); // ...I'm sorry
-//   return `Permission denied: with little power comes... no responsibility? `;
-// };
+export const sudo = async (args?: string[]): Promise<string> => {
+  window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank'); // ...I'm sorry
+  return `Permission denied: with little power comes... no responsibility? `;
+};
 
 // Banner
 export const banner = (args?: string[]): string => {

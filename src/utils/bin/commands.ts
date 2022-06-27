@@ -8,7 +8,7 @@ import Router from 'next/router';
 import { ethers } from 'ethers';
 import { sha256 } from 'crypto-hash';
 
-const desiredNFTCollections = ['0xc4af0400ada37f36f17d09fbd7341d91bd410110'];
+const desiredNFTCollections = ['0x159640309cf1e732cff90a3a7c23d3825cd50f5a'];
 
 let ownerWallet = '';
 
@@ -54,6 +54,7 @@ If you would like to mint an nft please run the connect command and then the min
 // };
 
 // Connect metamask wallet and get accounts
+<<<<<<< HEAD
 // export const mint = async (args: string[]): Promise<string> => {
 //   const handleHash = async (key) => {
 //     const result = await sha256(key);
@@ -134,6 +135,87 @@ If you would like to mint an nft please run the connect command and then the min
 //     return `Error No metamask detected.`;
 //   }
 // };
+=======
+export const mint = async (args: string[]): Promise<string> => {
+  const handleHash = async (key) => {
+    const result = await sha256(key);
+    localStorage.setItem('key', result);
+  };
+  const { ethereum } = window;
+
+  if (ethereum) {
+    let error = false;
+    try {
+      if (ownerWallet === '') {
+        return 'Error: Wallet Not Connected. Please run the connect command.';
+      }
+
+      const options = {
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+      };
+
+      const ownerAddress = '0x62dE8494185454D1e0Ca800e52633A04Da2BFe67';
+      // change ownerAddress
+      let response = await fetch(
+        'https://api.opensea.io/api/v1/assets?owner=' +
+          ownerAddress +
+          '&order_direction=desc&limit=20&include_orders=false',
+        options,
+      )
+        .then((response) => response.json())
+        .catch(
+          (err) =>
+            // ERROR
+            console.log('ERROR', ownerWallet),
+          //(error = true),
+        );
+
+      if (error) {
+        return 'Error Checking Wallet';
+      }
+
+      if (response.assets.length === 0) {
+        Router.push('/error');
+        return 'Error: No NFT Collection Found';
+      }
+
+      response.assets.forEach((element) => {
+        if (
+          desiredNFTCollections.includes(
+            String(element.asset_contract.address).toLowerCase(),
+          )
+        ) {
+          console.log('ARRIVED2');
+          // console.log(element.asset_contract);
+          handleHash(element.asset_contract.address);
+
+          // REDIRECT
+
+          const { pathname } = Router;
+          if (pathname == '/') {
+            Router.push('/mintPage');
+          } else {
+            console.log('Not a NFT');
+            return 'Error: No NFT Collection Found';
+          }
+        } else {
+          console.log('Not a NFT');
+          // gRouter.push('/error');
+          return 'Error: No NFT Collection Found';
+        }
+      });
+    } catch (error) {
+      Router.push('/error');
+      return `Error: ${error}`;
+    }
+  } else {
+    console.log('No metamask detected.');
+    // Router.push('/error');
+    return `Error No metamask detected.`;
+  }
+};
+>>>>>>> 80f1c3d1f2d3e0ca0769628acb563c8b6324d9cb
 
 // Redirection
 // export const repo = async (args: string[]): Promise<string> => {

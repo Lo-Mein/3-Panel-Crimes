@@ -10,7 +10,7 @@ import Image from 'next/image';
 
 const contractAddress = '0xDF27FbDcfC0644d425e1C68539118C8f3A6BbddE';
 const abi = contract.abi;
-const desiredNFTCollections = ['0xc4af0400ada37f36f17d09fbd7341d91bd410110'];
+const desiredNFTCollections = ['0x159640309cf1e732cff90a3a7c23d3825cd50f5a'];
 
 const MintPage = ({ pageProps }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -53,6 +53,7 @@ const MintPage = ({ pageProps }) => {
       );
       console.log('Mint Success');
       setSuccessState(true);
+      localStorage.removeItem('key');
     } catch (err) {
       console.log('ERROR MINTING', err);
       setErrorState(true);
@@ -92,7 +93,7 @@ const MintPage = ({ pageProps }) => {
           headers: { Accept: 'application/json' },
         };
 
-        const ownerAddress = '0x8D77A8cf55f99d62D6B8AbC9050faf5859c0108f';
+        const ownerAddress = '0x62dE8494185454D1e0Ca800e52633A04Da2BFe67';
 
         let response = await fetch(
           'https://api.opensea.io/api/v1/assets?owner=' +
